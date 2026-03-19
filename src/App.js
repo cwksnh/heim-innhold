@@ -99,7 +99,6 @@ Presenter tema og begrunnelse (én linje) før hvert innlegg.${input ? `\n\nTill
       return `Juster dette innlegget for profil: ${profileLabel}, plattform: ${platformLabel}.${input ? `\n\nInnlegg:\n${input}` : "\n\n[Innlegg ikke oppgitt — be brukeren lime inn innlegget]"}`;
     }
 
-    // innlegg
     return `Skriv ett innlegg for profil: ${profileLabel}, plattform: ${platformLabel}.${input ? `\n\nTema: ${input}` : "\n\n[Tema ikke oppgitt — velg et godt tema selv basert på rekrutteringsfaget og Helgeland-markedet]"}`;
   };
 
@@ -109,7 +108,7 @@ Presenter tema og begrunnelse (én linje) før hvert innlegg.${input ? `\n\nTill
     setCopied(false);
 
     try {
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
+      const response = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -143,7 +142,6 @@ Presenter tema og begrunnelse (én linje) før hvert innlegg.${input ? `\n\nTill
       fontFamily: "'Georgia', serif",
       padding: "0",
     }}>
-      {/* Header */}
       <div style={{
         background: "#1a1a2e",
         padding: "28px 40px",
@@ -176,7 +174,6 @@ Presenter tema og begrunnelse (én linje) før hvert innlegg.${input ? `\n\nTill
 
       <div style={{ maxWidth: "720px", margin: "0 auto", padding: "40px 24px" }}>
 
-        {/* Kommando */}
         <Section title="Kommando">
           <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
             {COMMANDS.map(c => (
@@ -198,7 +195,6 @@ Presenter tema og begrunnelse (én linje) før hvert innlegg.${input ? `\n\nTill
           </div>
         </Section>
 
-        {/* Profil og plattform */}
         {command !== "ukesplan" && (
           <>
             <Section title="Profil">
@@ -244,7 +240,6 @@ Presenter tema og begrunnelse (én linje) før hvert innlegg.${input ? `\n\nTill
           </>
         )}
 
-        {/* Input */}
         <Section title={command === "juster" ? "Innlegg som skal justeres" : command === "ukesplan" ? "Tilleggsinformasjon (valgfritt)" : "Tema eller instruksjoner"}>
           <textarea
             value={input}
@@ -272,7 +267,6 @@ Presenter tema og begrunnelse (én linje) før hvert innlegg.${input ? `\n\nTill
           />
         </Section>
 
-        {/* Generer-knapp */}
         <button
           onClick={generate}
           disabled={loading}
@@ -295,7 +289,6 @@ Presenter tema og begrunnelse (én linje) før hvert innlegg.${input ? `\n\nTill
           {loading ? "Genererer..." : "Generer innlegg →"}
         </button>
 
-        {/* Output */}
         {output && (
           <div ref={outputRef} style={{
             background: "white",
